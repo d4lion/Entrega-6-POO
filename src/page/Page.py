@@ -9,8 +9,11 @@ class Page(ft.ResponsiveRow):
         super().__init__(expand=True)
 
         self.table = Table(DatabaseContext)
+        self.formulario = Formulario(DatabaseContext, self.table)
+
+        self.table.set_form_context(self.formulario)
 
         self.controls = [
-            Formulario(DatabaseContext, self.table),
+            self.formulario,
             self.table
         ]

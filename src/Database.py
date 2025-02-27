@@ -26,3 +26,11 @@ class Context:
 
         cursor.execute(query, (id,))
         self.connection.commit()
+
+    def update_user(self, id, name, email, phone, last_name=None):
+        cursor = self.connection.cursor()
+        query = """UPDATE users SET name = ?, last_name = ?, email = ?, phone = ?
+                WHERE id = ?"""
+
+        cursor.execute(query, (name, last_name, email, phone, id))
+        self.connection.commit()

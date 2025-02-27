@@ -30,7 +30,8 @@ class Formulario(ft.Container):
         self.delete = Button(text="Delete", icon=ft.Icons.DELETE,
                              function_call=self.__delete_user)
 
-        self.update = Button(text="Update", icon=ft.Icons.UPDATE)
+        self.update = Button(text="Update", icon=ft.Icons.UPDATE,
+                             function_call=self.__update_user)
 
         # Buttons container
         self.buttons_container = ft.Row(
@@ -93,6 +94,27 @@ class Formulario(ft.Container):
         finally:
             self.table_data.update_table()
 
+    def __update_user(self, e=None):
+        if self.table_data.selected_row is None:
+            return
+
+        if not self.id.value:
+            return
+
+        try:
+            self.database.update_user(
+                self.id.value,
+                self.name.value,
+                self.email.value,
+                self.phone.value,
+                self.last_name.value
+            )
+        except:
+            raise "Error al actualizar usuario"
+        finally:
+            self.clean_fields()
+            self.table_data.update_table()
+
     def clean_fields(self):
         self.name.value = ""
         self.name.update()
@@ -104,3 +126,19 @@ class Formulario(ft.Container):
         self.phone.update()
         self.email.value = ""
         self.email.update()
+
+    def fill_fileds(self, data):
+        self.id.value = data[0]
+        self.id.update()
+
+        self.name.value = data[1]
+        self.name.update()
+
+        self.last_name.value = data[2]
+        self.last_name.update()
+
+        self.email.value = data[3]
+        self.email.update()
+
+        self.phone.value = data[4]
+        self.phone.update()

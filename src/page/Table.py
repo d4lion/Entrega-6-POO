@@ -1,6 +1,7 @@
 import flet as ft
 
 from .components.TextField import TextField
+from .interfaces.IForm import IForm
 
 
 class Table(ft.Container):
@@ -9,6 +10,9 @@ class Table(ft.Container):
 
         # Conexion con la base de datos
         self.database = DatabaseContext
+
+        #
+        self.form_contex: IForm = None
 
         # Variables de control
         self.selected_row = None
@@ -104,7 +108,7 @@ class Table(ft.Container):
 
         self.update()
 
-    def __edit_row(self, e) -> list:
+    def __edit_row(self, e) -> None:
         if not self.row_are_editable:
             return
 
@@ -113,4 +117,7 @@ class Table(ft.Container):
         for cell in self.selected_row_data:
             data.append(cell.content.value)
 
-        return data
+        self.form_contex.fill_fileds(data)
+
+    def set_form_context(self, form_context):
+        self.form_contex = form_context

@@ -10,3 +10,6 @@ class Context:
 
     def delete_user(self, id):
         pass
+
+    def update_user(self, id, name, email, phone, last_name=None):
+        pass
